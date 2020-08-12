@@ -1,7 +1,14 @@
 $bg-color: #202b33;
 $text-color: #f5f8fa;
 
+@import "~normalize.css";
+
 body {
   background: $bg-color;
   color: $text-color;
+}
+
+#app {
+  max-width: 1600px;
+  margin: 0 auto;
 }
