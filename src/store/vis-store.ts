@@ -106,7 +106,7 @@ export class VisStore {
   public jsonTree: any;
   @observable public viewportHeight: number;
   @observable public scrollPosition = 0;
-  public readonly flattenedTree = observable<FlattenedTreeNode>([]);
+  public readonly flattenedTree = observable.array<FlattenedTreeNode>([]);
 
   protected collapsedCache: { [key: string]: FlattenedTreeNode[] } = {};
 
@@ -115,7 +115,8 @@ export class VisStore {
       const json = JSON.parse(jsonString);
       this.jsonTree = json;
 
-      this.flattenedTree.replace(flattenTreeNode(this.jsonTree));
+      const flat = flattenTreeNode(this.jsonTree);
+      this.flattenedTree.replace(flat);
     } catch (e) {
       console.error(e);
     }

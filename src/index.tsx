@@ -15,7 +15,9 @@ const testJson = jsonFile;
 export const StoreProvider = ({ children }: { children: JSX.Element[] }): JSX.Element => {
   const store = new VisStore();
 
-  store.importJson(JSON.stringify(testJson));
+  setTimeout(() => {
+    store.importJson(JSON.stringify(testJson));
+  });
 
   return <storeContext.Provider value={store}>{children}</storeContext.Provider>;
 };

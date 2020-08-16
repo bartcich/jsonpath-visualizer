@@ -30,5 +30,9 @@ body {
 .tree-node {
   position: absolute;
   left: 0;
+  right: 0;
   height: $tree-row-height;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
 }
