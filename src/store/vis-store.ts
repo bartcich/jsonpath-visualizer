@@ -1,4 +1,4 @@
-import { observable, action, computed } from "mobx";
+import { observable, action, computed, toJS } from "mobx";
 import jsonpath from "jsonpath";
 import { FlattenedTreeNode, TreePath } from "../types/flattened-tree";
 import { isArray, isPrimitive, isObject } from "../utils";
@@ -108,6 +108,8 @@ export class VisStore {
   @observable public scrollPosition = 0;
   public readonly flattenedTree = observable<FlattenedTreeNode>([]);
 
+  protected collapsedCache: { [key: string]: FlattenedTreeNode[] } = {};
+
   importJson = (jsonString: string): void => {
     try {
       const json = JSON.parse(jsonString);
@@ -135,10 +137,15 @@ export class VisStore {
     const newNode = constructFlattenedTreeNode(jsonElement, node.path, !node.collapsed);
     if (!node.collapsed) {
       const [from, to] = findChildrenPostionRange(this.flattenedTree, node);
-      this.flattenedTree.splice(from, to - from, newNode);
+      const removedItems = this.flattenedTree.splice(from, to - from, newNode);
+      this.collapsedCache[jsonpath.stringify(node.path)] = toJS(removedItems);
     } else {
       const from = findNodePosition(this.flattenedTree, node);
-      const newNodes = [...flattenTreeNode(jsonElement, node.path)];
+
+      const pathString = jsonpath.stringify(node.path);
+      const newNodes = this.collapsedCache[pathString] || [...flattenTreeNode(jsonElement, node.path)];
+      delete this.collapsedCache[pathString];
+
       this.flattenedTree.splice(from, 1, ...newNodes);
     }
   };
