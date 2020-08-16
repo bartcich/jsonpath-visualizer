@@ -4,15 +4,14 @@ import "mobx-react-lite/batchingForReactDom";
 
 import { VisStore } from "./store/vis-store";
 import { storeContext } from "./store";
-import { Tree } from "./components/tree/tree";
-
+import { Visualizer } from "./components/Visualizer/visualizer";
 import "./style.scss";
 
 import jsonFile from "../tools/output/100.json";
 
 const testJson = jsonFile;
 
-export const StoreProvider = ({ children }: { children: JSX.Element[] }): JSX.Element => {
+export const StoreProvider = ({ children }: { children: JSX.Element }): JSX.Element => {
   const store = new VisStore();
 
   setTimeout(() => {
@@ -24,8 +23,7 @@ export const StoreProvider = ({ children }: { children: JSX.Element[] }): JSX.El
 
 const App = (
   <StoreProvider>
-    <div>here header</div>
-    <Tree />
+    <Visualizer />
   </StoreProvider>
 );
 

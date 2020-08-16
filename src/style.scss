@@ -35,4 +35,12 @@ body {
   text-overflow: ellipsis;
   overflow: hidden;
   white-space: nowrap;
+
+  &.matching {
+    color: red;
+  }
+}
+
+input[type="text"] {
+  width: 100%;
 }

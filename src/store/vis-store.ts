@@ -1,6 +1,6 @@
 import { observable, action, computed, toJS } from "mobx";
 import jsonpath from "jsonpath";
-import { FlattenedTreeNode } from "../types/flattened-tree";
+import { FlattenedTreeNode, TreePath } from "../types/flattened-tree";
 import {
   flattenTreeNode,
   getJsonNodeByPath,
@@ -85,5 +85,13 @@ export class VisStore {
       this.displayStartingIndex + this.displayItemsCount,
     );
     return displayTree;
+  }
+
+  @computed get matchingPaths(): TreePath[] {
+    try {
+      return this.searchQuery.length ? jsonpath.paths(this.jsonTree, this.searchQuery) : [];
+    } catch (e) {
+      return [];
+    }
   }
 }
