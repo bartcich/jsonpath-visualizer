@@ -1,5 +1,6 @@
 $bg-color: #202b33;
 $text-color: #f5f8fa;
+$tree-row-height: 20px;
 
 @import "~normalize.css";
 
@@ -11,4 +12,10 @@ body {
 #app {
   max-width: 1600px;
   margin: 0 auto;
+}
+
+.tree-node {
+  position: absolute;
+  left: 0;
+  height: $tree-row-height;
 }
