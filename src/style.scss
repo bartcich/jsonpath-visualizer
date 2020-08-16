@@ -3,6 +3,10 @@ $text-color: #f5f8fa;
 $tree-row-height: 20px;
 
 @import "~normalize.css";
+html,
+body {
+  height: 100%;
+}
 
 body {
   background: $bg-color;
@@ -12,6 +16,15 @@ body {
 #app {
   max-width: 1600px;
   margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.tree {
+  height: 100%;
+  overflow: auto;
+  position: relative;
 }
 
 .tree-node {
