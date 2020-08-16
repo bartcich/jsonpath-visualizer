@@ -6,25 +6,36 @@ import { isArray, isPrimitive, isObject } from "../utils";
 const ROW_HEIGHT = 20;
 const OVERFLOW_DISPLAY = 10;
 
+const simplifiedChildLabel = (node: any): string => {
+  if (isArray(node)) {
+    return "Array";
+  }
+  if (isObject(node)) {
+    return "Object";
+  }
+  return node;
+};
+
 const nodeLabel = (node: any, path: TreePath, collapsed: boolean): string => {
   const key = path[path.length - 1];
   const isInObject = typeof key === "string";
 
   if (collapsed) {
     if (isArray(node)) {
-      return `[Array(${node.length})]`;
+      if (node.length < 1) {
+        return "[]";
+      }
+      const firstChild = node[0];
+      const hasMoreChildren = node.length > 1;
+      return `[ ${simplifiedChildLabel(firstChild)}${hasMoreChildren ? ", ..." : ""}]`;
     } else if (isObject(node)) {
       const objectKeys = Object.keys(node);
       if (objectKeys.length < 1) {
         return `{}`;
       }
       const firstKey = objectKeys[0];
-      if (isPrimitive(node[firstKey])) {
-        const hasMoreKeys = objectKeys.length > 1;
-        return `{ ${firstKey}: ${node[firstKey]} ${hasMoreKeys ? ", ..." : ""}}`;
-      }
-
-      return `[Object]`;
+      const hasMoreKeys = objectKeys.length > 1;
+      return `{ ${firstKey}: ${simplifiedChildLabel(node[firstKey])}${hasMoreKeys ? ", ..." : ""}}`;
     }
   } else {
     // for array root (key is number) -> display nothing
