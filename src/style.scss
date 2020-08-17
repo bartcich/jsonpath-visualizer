@@ -1,11 +1,16 @@
 $bg-color: #202b33;
 $text-color: #f5f8fa;
+$button-color: #2b95d6;
+$highlight: #f55656;
+$border-radius: 5px;
 $tree-row-height: 20px;
 
 @import "~normalize.css";
 html,
 body {
   height: 100%;
+  font-family: "Roboto";
+  font-size: 15px;
 }
 
 body {
@@ -14,17 +19,34 @@ body {
 }
 
 #app {
-  max-width: 1600px;
+  max-width: 900px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;
   height: 100%;
+
+  > * {
+    margin: 10px;
+  }
 }
 
 .tree {
   height: 100%;
   overflow: auto;
   position: relative;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: $border-radius;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+}
+
+.message {
+  margin: 10px;
+  text-align: center;
+  display: block;
+
+  &.danger {
+    color: $highlight;
+  }
 }
 
 .tree-node {
@@ -37,12 +59,13 @@ body {
   white-space: nowrap;
 
   &.matching {
-    color: red;
+    color: $highlight;
   }
 }
 
-input[type="text"] {
-  width: 100%;
+.tree-node-collapse {
+  cursor: pointer;
+  color: darken(#fff, 30%);
 }
 
 input[type="file"] {
@@ -51,6 +74,7 @@ input[type="file"] {
 
 .file-drop {
   width: 100%;
+  text-align: center;
 
   .fullscreen-drop {
     display: none;
@@ -73,6 +97,45 @@ input[type="file"] {
 
       background: #000;
       opacity: 0.8;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
     }
+  }
+}
+
+.material-icons {
+  vertical-align: middle;
+}
+
+button {
+  background: $button-color;
+  color: $text-color;
+  border: 1px solid darken($button-color, 50%);
+  border-radius: $border-radius;
+  padding: 10px;
+  cursor: pointer;
+}
+
+.search-wrapper {
+  position: relative;
+  .material-icons {
+    position: absolute;
+    top: 9px;
+    left: 5px;
+  }
+}
+
+.search-input {
+  width: calc(100% - 34px * 2);
+  padding: 10px 34px;
+  background: rgba(0, 0, 0, 0.3);
+  color: $text-color;
+  border: 1px solid rgba(0, 0, 0, 0.8);
+  border-radius: $border-radius;
+
+  &.invalid {
+    border-color: $highlight;
   }
 }

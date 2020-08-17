@@ -19,18 +19,30 @@ export class VisStore {
   public readonly flattenedTree = observable.array<FlattenedTreeNode>([]);
   @observable public searchQuery = "";
 
+  @observable public isLoading = false;
+  @observable public isWrongFile = false;
+
   protected collapsedCache: { [key: string]: FlattenedTreeNode[] } = {};
 
   importJson = (jsonString: string): void => {
-    try {
-      const json = JSON.parse(jsonString);
-      this.jsonTree = json;
+    this.flattenedTree.replace([]);
+    this.searchQuery = "";
 
-      const flat = flattenTreeNode(this.jsonTree);
-      this.flattenedTree.replace(flat);
-    } catch (e) {
-      console.error(e);
-    }
+    this.isLoading = true;
+    this.isWrongFile = false;
+    setTimeout(() => {
+      try {
+        const json = JSON.parse(jsonString);
+        this.jsonTree = json;
+
+        const flat = flattenTreeNode(this.jsonTree);
+        this.flattenedTree.replace(flat);
+      } catch (e) {
+        this.isWrongFile = true;
+        // console.error(e);
+      }
+      this.isLoading = false;
+    });
   };
 
   @action

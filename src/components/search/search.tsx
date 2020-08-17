@@ -11,5 +11,16 @@ export const Search: React.FC<{}> = observer(() => {
     updateSearchQuery(e.currentTarget.value);
   };
 
-  return <input type="search" value={searchQuery} onChange={handleChange} />;
+  return (
+    <div className="search-wrapper">
+      <input
+        type="text"
+        placeholder="Type your query here..."
+        className="search-input"
+        value={searchQuery}
+        onChange={handleChange}
+      />
+      <span className="material-icons">search</span>
+    </div>
+  );
 });

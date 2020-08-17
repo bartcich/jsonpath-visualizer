@@ -29,7 +29,11 @@ export const TreeNode: React.FC<TreeNodeProps> = observer((props) => {
 
   return (
     <div className={cls(`tree-node`, { matching })} style={{ top: position, marginLeft: depth }}>
-      {node.collapsible && <span onClick={handleCollapseTrigger}>{node.collapsed ? "[] " : "[x] "}</span>}
+      {node.collapsible && (
+        <span className="tree-node-collapse" onClick={handleCollapseTrigger}>
+          {<span className="material-icons">{node.collapsed ? "keyboard_arrow_right" : "keyboard_arrow_down"}</span>}
+        </span>
+      )}
       {node.displayValue}
     </div>
   );

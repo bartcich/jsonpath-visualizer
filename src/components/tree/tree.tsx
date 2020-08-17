@@ -12,6 +12,8 @@ export const Tree: React.FC<{}> = observer(() => {
     displayStartingIndex,
     displayContainerHeight,
     displayedTreePart,
+    isLoading,
+    isWrongFile,
     setScrollPosition,
     setViewportHeight,
   } = store;
@@ -27,6 +29,8 @@ export const Tree: React.FC<{}> = observer(() => {
 
   return (
     <div className="tree" ref={treeRef} onScroll={onScroll}>
+      {isLoading && <span className="message">Loading ...</span>}
+      {isWrongFile && <span className="message danger">File is not valid JSON file.</span>}
       <div className="tree-container" style={{ height: displayContainerHeight }}>
         {displayedTreePart.map((n, i) => (
           <TreeNode key={i} node={n} position={(i + displayStartingIndex) * ROW_HEIGHT} />

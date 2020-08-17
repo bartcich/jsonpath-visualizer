@@ -46,6 +46,7 @@ export const FileInput: React.FC<{}> = observer(() => {
     return () => {
       window.removeEventListener("dragenter", dragEnter);
       window.removeEventListener("dragexit", dragExit);
+      window.removeEventListener("dragover", dragOver);
     };
   }, []);
 
@@ -70,7 +71,7 @@ export const FileInput: React.FC<{}> = observer(() => {
 
   return (
     <label className={classes} onDrop={handleDrop}>
-      <div className="fullscreen-drop">Drop file here</div>
+      <div className="fullscreen-drop">Just drop it here...</div>
       <button onClick={() => fileuploadRef.current.click()}>Open file</button> or drop anywhere
       <input ref={fileuploadRef} type="file" onChange={handleChange} />
     </label>
