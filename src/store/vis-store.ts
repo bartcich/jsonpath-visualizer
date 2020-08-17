@@ -36,7 +36,7 @@ export class VisStore {
         this.jsonTree = json;
 
         const flat = flattenTreeNode(this.jsonTree);
-        this.flattenedTree.replace(flat);
+        this.flattenedTree.replace(flat.length > 1 ? flat.slice(1) : flat);
       } catch (e) {
         this.isWrongFile = true;
         // console.error(e);
